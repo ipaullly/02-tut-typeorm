@@ -5,6 +5,7 @@ import { validate } from "class-validator";
 import { User } from "../entity/User";
 
 class UserController {
+  
   static listAll = async (req: Request, res: Response) => {
     // get users from the database
     const userRepository = getRepository(User);
@@ -14,6 +15,7 @@ class UserController {
     // send the users object
     res.send(users);
   };
+
   static getOneById = async (req: Request, res: Response) => {
     // Get the ID from the url
     const id: any = req.params.id;
@@ -28,6 +30,7 @@ class UserController {
       res.status(404).send("User not found oya!");
     }
   };
+
   static newUser = async (req: Request, res: Response) => {
     // get parameters from the body
     let { username, password, role } = req.body;
@@ -59,6 +62,7 @@ class UserController {
     res.status(201).send("User created")
 
   };
+
   static editUser = async (req: Request, res: Response) => {
     // Get id from req url
     const id = req.params.id;
@@ -94,6 +98,7 @@ class UserController {
     // after all send a 204 (no content , but accepted) response
     res.status(204).send();
   };
+
   static deleteUser = async (req: Request, res: Response) => {
     // get id from url
     const id = req.params.id;
@@ -108,6 +113,7 @@ class UserController {
     userRepository.delete(id);
     // after all send a 204 - no content but accepted response
   };
+  
 };
 
 export default UserController;
