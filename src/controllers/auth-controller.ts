@@ -3,7 +3,7 @@ import * as jwt from "jsonwebtoken";
 import { getRepository } from "typeorm";
 import { validate } from "class-validator";
 
-import { User } from "../entity/User";
+import { User } from "../entity";
 import config from "../config/config";
 
 class AuthController {
@@ -37,6 +37,26 @@ class AuthController {
 
     // send the jwt in the response
     res.send(token);
+  };
+
+  static register = async (req: Request, res: Response) => {
+    let { username, password, role } = req.body;
+    if(!(username && password && role)) {
+      res.status(400).send()
+    }
+    let user = new User();
+    user.username = username;
+    user.password = password;
+    user.hashPassword();
+    user.role = role;
+    const userRepository = getRepository(User);
+
+    try {
+      await userRepository.save(user);
+    } catch (error) {
+      res.status(401).send(error);
+    }
+    res.status(201).send();
   };
 
   static changePassword = async (req: Request, res: Response) => {

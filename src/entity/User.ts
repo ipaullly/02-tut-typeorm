@@ -9,8 +9,7 @@ import {
 } from 'typeorm';
 import { Length, IsNotEmpty } from "class-validator";
 import * as bcrypt from "bcryptjs";
-import { Note } from './Note';
-import { SharedNote } from './SharedNote';
+import { Note, SharedNote } from './index'; 
 
 @Entity()
 @Unique(["username"])

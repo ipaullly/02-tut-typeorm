@@ -1,6 +1,5 @@
 import { Entity, PrimaryColumn, ManyToOne, JoinColumn } from "typeorm";
-import { User } from "./User";
-import { Note } from "./Note";
+import { User, Note } from "./index";
 
 @Entity()
 export class SharedNote {

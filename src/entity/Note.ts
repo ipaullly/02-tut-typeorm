@@ -2,14 +2,11 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  Unique,
-  CreateDateColumn,
-  UpdateDateColumn,
   ManyToOne,
   JoinColumn,
   OneToMany
 } from 'typeorm';
-import { User } from './User';
+import { User, SharedNote } from './index';
 
 @Entity()
 export class Note {
