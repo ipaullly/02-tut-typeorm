@@ -15,12 +15,12 @@ router.get(
   UserController.getOneById
 );
 
-//create a new user
-router.post(
-  "/",
-  [checkJwt, checkRole(["ADMIN"])],
-  UserController.newUser
-);
+// //create a new user
+// router.post(
+//   "/",
+//   [checkJwt, checkRole(["ADMIN"])],
+//   UserController.newUser
+// );
 
 //patch user
 router.patch(

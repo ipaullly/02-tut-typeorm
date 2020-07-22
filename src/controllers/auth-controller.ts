@@ -5,6 +5,7 @@ import { validate } from "class-validator";
 
 import { User } from "../entity";
 import config from "../config/config";
+import { checkAlphaNumeric } from "../config/utilities";
 
 class AuthController {
   static login = async (req: Request, res: Response) => {
@@ -42,19 +43,39 @@ class AuthController {
   static register = async (req: Request, res: Response) => {
     let { username, password, role } = req.body;
     if(!(username && password && role)) {
-      res.status(400).send()
+      res.status(400).send({
+        status: 'Fail',
+        message: 'Please ensure you have included role, username, password'
+      });
     }
+
+    if (!checkAlphaNumeric(password)) {
+      res.status(400).send({
+        status: 'Fail',
+        message: 'Please ensure your password includes both numbers and letters'
+      })
+    };
+
     let user = new User();
+    const userRepository = getRepository(User);
+
     user.username = username;
     user.password = password;
     user.hashPassword();
     user.role = role;
-    const userRepository = getRepository(User);
+
+     // validate if the parameters are valid
+    const errors = await validate(user);
+    if (errors.length > 0) {
+      res.status(400).send(errors);
+      return;
+    }
 
     try {
       await userRepository.save(user);
     } catch (error) {
-      res.status(401).send(error);
+      res.status(409).send("username already in use");
+      return;
     }
     res.status(201).send();
   };
