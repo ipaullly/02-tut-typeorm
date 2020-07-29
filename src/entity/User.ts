@@ -5,11 +5,13 @@ import {
   Unique,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany
+  OneToMany,
+  OneToOne,
+  JoinColumn
 } from 'typeorm';
 import { Length, IsNotEmpty } from "class-validator";
 import * as bcrypt from "bcryptjs";
-import { Note, SharedNote } from './index'; 
+import { Note, SharedNote, Cart } from './index'; 
 
 @Entity()
 @Unique(["username"])
@@ -28,6 +30,10 @@ export class User {
   @Column()
   @IsNotEmpty()
   role: string;
+
+  @OneToOne(() => Cart, cart => cart.user)
+  @JoinColumn()
+  cart?: Cart
 
   @OneToMany(() => Note, note => note.owner)
   notes: Note[];

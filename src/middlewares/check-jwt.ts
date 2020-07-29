@@ -12,7 +12,9 @@ export const checkJwt = (req: Request, res: Response, next: NextFunction) => {
     res.locals.jwtPayload = jwtPayload;
   } catch (error) {
     //if token is not valid, respond with a 401
-    res.status(401).send();
+    res.status(401).send({
+      message: 'Your are not authorized to access this route'
+    });
     return;
   }
 
@@ -20,7 +22,7 @@ export const checkJwt = (req: Request, res: Response, next: NextFunction) => {
   // we set a new token with every request
   const { userId, username } = jwtPayload;
   const newToken = jwt.sign({ userId, username }, config.jwtSecret, {
-    expiresIn: "1h"
+    expiresIn: "24h"
   });
   res.setHeader("token", newToken);
 

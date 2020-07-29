@@ -18,16 +18,24 @@ class UserController {
 
   static getOneById = async (req: Request, res: Response) => {
     // Get the ID from the url
-    const id: any = req.params.id;
-
+    const id: number = Number(req.params.id);
+    console.log(id, '==');
+    console.log(typeof(id), '===');
+    
+    
     // get the user from database
     const userRepository = getRepository(User);
     try {
       const user = await userRepository.findOneOrFail(id, {
-        select: ["id", "username", "role"] //  we don't need the password in the response body
+        relations: ['notes'],
+        select: ["username", "role", "id"]
       });
+      res.send(user);
     } catch (error) {
-      res.status(404).send("User not found oya!");
+      res.status(404).send({
+        error,
+        message: "User not found!"
+      });
     }
   };
 
