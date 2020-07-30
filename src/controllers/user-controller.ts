@@ -10,6 +10,7 @@ class UserController {
     // get users from the database
     const userRepository = getRepository(User);
     const users = await userRepository.find({
+      relations: ['cart', 'cart.products'],
       select: ["id", "username", "role"] // we don't want to include passwords in the response body
     });
     // send the users object
@@ -19,9 +20,6 @@ class UserController {
   static getOneById = async (req: Request, res: Response) => {
     // Get the ID from the url
     const id: number = Number(req.params.id);
-    console.log(id, '==');
-    console.log(typeof(id), '===');
-    
     
     // get the user from database
     const userRepository = getRepository(User);
@@ -88,6 +86,7 @@ class UserController {
     }
     userRepository.delete(id);
     // after all send a 204 - no content but accepted response
+    res.status(204).send();
   };
   
 };

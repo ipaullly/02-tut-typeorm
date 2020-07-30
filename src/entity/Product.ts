@@ -22,56 +22,86 @@ export class Product {
   description: string;
 
   @ManyToOne(type => Cart, cart => cart.products)
-  carts?: Cart[];
+  carts: Cart[];
 
-  @Column()
-  length?: string;
+  @Column({
+    nullable: true
+  })
+  length: string;
 
-  @Column()
-  insertable?: string;
+  @Column({
+    nullable: true
+  })
+  insertable: string;
 
-  @Column()
-  width?: string;
+  @Column({
+    nullable: true
+  })
+  width: string;
 
-  @Column()
-  function?: string;
+  @Column({
+    nullable: true
+  })
+  function: string;
 
-  @Column()
-  volume?: string;
+  @Column({
+    nullable: true
+  })
+  volume: string;
 
   @ManyToMany(() => Category, category => category.products, {
     cascade: true
   })
   @JoinTable()
-  categories?: Category[];
+  categories: Category[];
 
-  @Column()
-  shape?: string;
+  @Column({
+    nullable: true
+  })
+  shape: string;
 
-  @Column()
-  feature?: string;
+  @Column({
+    nullable: true
+  })
+  feature: string;
 
-  @Column()
-  color?: string;
+  @Column({
+    nullable: true
+  })
+  color: string;
 
-  @Column()
-  brand?: string;
+  @Column({
+    nullable: true
+  })
+  brand: string;
 
-  @Column()
-  flavor?: string;
+  @Column({
+    nullable: true
+  })
+  flavor: string;
 
-  @Column()
-  material?: string;
+  @Column({
+    nullable: true
+  })
+  material: string;
 
-  @Column()
-  texture?: string;
+  @Column({
+    nullable: true
+  })
+  texture: string;
 
-  @Column()
-  weight?: string;
+  @Column({
+    nullable: true
+  })
+  weight: string;
 
-  @Column()
-  manufacturer?: string;
+  @Column({
+    nullable: true
+  })
+  manufacturer: string;
 
-  @Column()
-  batteries?: string;
+  @Column({
+    nullable: true
+  })
+  batteries: string;
 }

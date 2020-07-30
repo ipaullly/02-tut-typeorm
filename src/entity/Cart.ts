@@ -13,10 +13,14 @@ export class Cart {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({
+    nullable: true
+  })
   totalQuantity: number;
 
-  @Column()
+  @Column({
+    nullable: true
+  })
   totalPrice: number;
 
   @ManyToMany(type => Product, product => product.carts, {

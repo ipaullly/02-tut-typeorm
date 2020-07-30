@@ -27,11 +27,15 @@ export class User {
   @Length(4, 100)
   password: string;
 
-  @Column()
+  @Column({
+    nullable: true
+  })
   @IsNotEmpty()
   role: string;
 
-  @OneToOne(() => Cart, cart => cart.user)
+  @OneToOne(() => Cart, cart => cart.user, {
+    cascade: true
+  })
   @JoinColumn()
   cart?: Cart
 
