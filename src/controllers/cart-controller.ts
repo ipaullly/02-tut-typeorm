@@ -35,26 +35,6 @@ class CartController {
     let cart = new Cart();
     const cartRepository = getRepository(Cart);
 
-    cart.totalPrice = totalPrice;
-    cart.totalQuantity = totalQuantity;
-    cart.products = selectedProducts;
-
-    const errors = await validate(cart);
-    if (errors.length > 0) {
-      res.status(400).send(errors);
-      return;
-    }
-
-    try {
-      await cartRepository.save(cart);
-    } catch (error) {
-      console.log(error);
-      res.status(401).send({
-        status: "fail",
-        messsage: error.message
-      });
-      return;
-    }
     // get id from jwt
     const id = res.locals.jwtPayload.userId;
 
@@ -66,6 +46,29 @@ class CartController {
     } catch (id) {
       res.status(401).send();
     }
+
+    cart.totalPrice = totalPrice;
+    cart.totalQuantity = totalQuantity;
+    cart.products = selectedProducts;
+    cart.username = user.username;
+
+    const errors = await validate(cart);
+    if (errors.length > 0) {
+      res.status(400).send(errors);
+      return;
+    }
+    // save cart to table
+    try {
+      await cartRepository.save(cart);
+    } catch (error) {
+      console.log(error);
+      res.status(401).send({
+        status: "fail",
+        messsage: error.message
+      });
+      return;
+    }
+    // save cart relation to the user entity
     user.cart = cart;
 
     try {
@@ -89,7 +92,7 @@ class CartController {
     // get users from the database
     const cartRepository = getRepository(Cart);
     const carts = await cartRepository.find({
-      relations: ['user', 'products']
+      relations: ['products']
     });
     // send the users object
     res.status(200).send(carts);

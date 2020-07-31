@@ -32,4 +32,9 @@ export class Cart {
   @OneToOne(type => User, user => user.cart)
   user: User;
 
+  @Column({
+    nullable: true
+  })
+  username: string;
+
 }

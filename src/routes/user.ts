@@ -11,14 +11,14 @@ router.get("/", [checkJwt, checkRole(["ADMIN"])], UserController.listAll);
 //get single user
 router.get(
   "/:id([0-9]+)",
-  [checkJwt, checkRole(["ADMIN"])],
+  [checkJwt, checkRole(["ADMIN","USER"])],
   UserController.getOneById
 );
 
 //patch user
 router.patch(
   "/:id([0-9]+)",
-  [checkJwt, checkRole(["ADMIN"])],
+  [checkJwt, checkRole(["ADMIN", "USER"])],
   UserController.editUser
 );
 

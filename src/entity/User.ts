@@ -48,7 +48,9 @@ export class User {
   @OneToMany(() => SharedNote, sharedNote => sharedNote.sender)
   notesYouShared: Note[];
 
-  @Column()
+  @Column({
+    select: false
+  })
   @CreateDateColumn()
   createdAt: Date;
 

@@ -25,7 +25,7 @@ class UserController {
     const userRepository = getRepository(User);
     try {
       const user = await userRepository.findOneOrFail(id, {
-        relations: ['notes'],
+        relations: ['cart', 'cart.products'],
         select: ["username", "role", "id"]
       });
       res.send(user);

@@ -1,25 +1,33 @@
 import { Router } from "express";
 import ProductController from "../controllers/product-controller";
 import { Product } from "../entity";
+import { checkJwt } from "../middlewares/check-jwt";
+import { checkRole } from "../middlewares/check-role";
 
 const router = Router();
-// registration route
-router.post("", ProductController.createProduct);
+// create product
+router.post(
+  "",
+  [checkJwt, checkRole(["ADMIN"])],
+  ProductController.createProduct
+);
 
-//login route
-router.get("", ProductController.listProducts);
+//get all products
+router.get(
+  "",
+  ProductController.listProducts
+);
 
 //get single product
 router.get(
   "/:id",
-  // [checkJwt, checkRole(["ADMIN"])],
   ProductController.listProductById
 );
 
 //patch product
 router.patch(
   "/:id",
-  // [checkJwt, checkRole(["ADMIN"])],
+  [checkJwt, checkRole(["ADMIN"])],
   ProductController.editProduct
 );
 
